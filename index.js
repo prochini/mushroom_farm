@@ -171,7 +171,7 @@ function grow(field, plant) {
       randomGrow(field, ["​🍄​", "🍄", "🍄", "​🍄​", "🍄", "🍄"]); //牛肝菌的地
       break;
     case "8":
-      randomGrow(field, ["🪐 ​", "🐖", "🐩", "​🎆​", "🦐", "🌈"]); //XX的地
+      randomGrow(field, ["🪐 ​", "🐖", "🐩", "​🐽​", "🦐", "🌈"]); //XX的地
       break;
     default:
       // code block
