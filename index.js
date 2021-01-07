@@ -13,6 +13,7 @@ var dict = {};
 var inventory = {};//fig name amount id
 var inventoryOpened = false;
 var shopOpened = false;
+var countClick = 0;
 function animal(n, fig, size, price, products) {
 
   animalNo += 1;
@@ -120,6 +121,10 @@ function farm(event) {
       grow(event.target.id, crops[parseInt(dict[selectionMode])]);
       wallet -= crops[dict[selectionMode]].price;
       $("#wallet").html("💵 錢錢💵" + wallet);
+      countClick += 1;
+      if (countClick == 10) {
+        $('.scoreModal').fadeIn(300);
+      }
     } else if ($("#" + event.target.id).html() != "") {
       //inventory[crops[dict[$("#" + event.target.id).html().substring(4, 6)]].id][2] += parseInt(crops[dict[$("#" + event.target.id).html().substring(4, 6)]].cropNum);
       $("#" + event.target.id).html("");
@@ -142,13 +147,13 @@ function grow(field, plant) {
   //console.log(who);
   switch (who) {
     case "0":
-      randomGrow(field, ["​🪐", "🥚", "🍳", "​🥟​", "🥚", "🗿"]); //聰明蛋的地
+      randomGrow(field, ["​🪐", "🥚", "🍳", "🐣​", "🥚", "🗿"]); //聰明蛋的地
       break;
     case "1":
-      randomGrow(field, ["🌪​", "☄️", "🌨", "🌪​", "🔥", "🌊"]); //士凱的地
+      randomGrow(field, ["☄️​", "☄️", "🔥", "⚡️​", "🔥", "🌊"]); //士凱的地
       break;
     case "2":
-      randomGrow(field, ["​👻", "🤬", "🧠", "​🤬​", "👻", "🤬"]); //詠升的地
+      randomGrow(field, ["​ 💦", "💦", "💦", "​🥛", "🚱", "💦"]); //詠升的地
       break;
     case "3":
       randomGrow(field, ["​💀​", "☠️", "💣", "​☢️​", "💩", "💩"]); //吉米的地
@@ -173,4 +178,93 @@ function grow(field, plant) {
       break;
   }
 }
+var app = new PIXI.Application(500, 300, { transparent: true });
+document.getElementById("mushBugs").appendChild(app.view);
 
+var sprites = new PIXI.particles.ParticleContainer(300, {
+  scale: true,
+  position: true,
+  rotation: true,
+  uvs: true,
+  alpha: true,
+});
+app.stage.addChild(sprites);
+
+// create an array to store all the sprites
+var maggots = [];
+
+var totalSprites = app.renderer instanceof PIXI.WebGLRenderer ? 10000 : 100;
+
+for (var i = 0; i < totalSprites; i++) {
+  // create a new Sprite
+  var dude = PIXI.Sprite.fromImage('./mushroom.png');
+
+  dude.tint = Math.random() * 0xE8D4CD;
+
+  // set the anchor point so the texture is centerd on the sprite
+  dude.anchor.set(0.5);
+
+  // different maggots, different sizes
+  dude.scale.set(0.8 + Math.random() * 0.3);
+
+  // scatter them all
+  dude.x = Math.random() * app.screen.width;
+  dude.y = Math.random() * app.screen.height;
+
+  dude.tint = Math.random() * 0x808080;
+
+  // create a random direction in radians
+  dude.direction = Math.random() * Math.PI * 2;
+
+  // this number will be used to modify the direction of the sprite over time
+  dude.turningSpeed = Math.random() - 0.8;
+
+  // create a random speed between 0 - 2, and these maggots are slooww
+  dude.speed = (2 + Math.random() * 2) * 0.2;
+
+  dude.offset = Math.random() * 100;
+
+  // finally we push the dude into the maggots array so it it can be easily accessed later
+  maggots.push(dude);
+
+  sprites.addChild(dude);
+}
+
+// create a bounding box box for the little maggots
+var dudeBoundsPadding = 100;
+var dudeBounds = new PIXI.Rectangle(
+  -dudeBoundsPadding,
+  -dudeBoundsPadding,
+  app.screen.width + dudeBoundsPadding * 2,
+  app.screen.height + dudeBoundsPadding * 2
+);
+
+var tick = 0;
+
+app.ticker.add(function () {
+  // iterate through the sprites and update their position
+  for (var i = 0; i < maggots.length; i++) {
+    var dude = maggots[i];
+    dude.scale.y = 0.95 + Math.sin(tick + dude.offset) * 0.05;
+    dude.direction += dude.turningSpeed * 0.01;
+    dude.x += Math.sin(dude.direction) * (dude.speed * dude.scale.y);
+    dude.y += Math.cos(dude.direction) * (dude.speed * dude.scale.y);
+    dude.rotation = -dude.direction + Math.PI;
+
+    // wrap the maggots
+    if (dude.x < dudeBounds.x) {
+      dude.x += dudeBounds.width;
+    } else if (dude.x > dudeBounds.x + dudeBounds.width) {
+      dude.x -= dudeBounds.width;
+    }
+
+    if (dude.y < dudeBounds.y) {
+      dude.y += dudeBounds.height;
+    } else if (dude.y > dudeBounds.y + dudeBounds.height) {
+      dude.y -= dudeBounds.height;
+    }
+  }
+
+  // increment the ticker
+  tick += 0.1;
+});
