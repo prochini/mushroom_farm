@@ -4,10 +4,10 @@
 <html>
 
 <head>
-  <title>Farming game</title>
+  <title>香菇農場</title>
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <link rel="stylesheet" href="/index.css">
-
+  <link rel="icon" href="/mo.ico">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
       <div class="cell"></div>
       <div class="cell"></div>
       <div class="cell"></div>
-      <div class="cell"></div>
+      <div class="cell whatUpMan"></div>
       <div class="cell"></div>
       <div class="cell"></div>
       <div class="cell"></div>
@@ -93,9 +93,36 @@
   <article id="cropmenu">
     <button class="close" onclick="javascript:void($(this).parent().toggle(400))">X</button>
     <h1>Crops</h1>
-
-
   </article>
+
+  <div class="modal scoreModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header mb-4">
+        請給我們10顆星
+      </div>
+      <div class="modal-content mb-4">
+        🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
+      </div>
+      <div class="modal-footer">
+        <button class="button btn-black yesBtn">好</button>
+        <button class="button btn-black noBtn">不好</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal dialogModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header mb-4">
+
+      </div>
+      <div class="modal-content mb-4">
+        Hi what Up
+      </div>
+      <div class="modal-footer">
+        <button class="button btn-black yesBtn">喔</button>
+      </div>
+    </div>
+  </div>
   <!--
   <div id="shadow"><button id="plot">PLOT</button></div>
   <button class="doneBtn"></button>

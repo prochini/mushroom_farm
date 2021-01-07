@@ -92,24 +92,24 @@ body>#shadow {
 
 .field {
   top: 0px !important;
-  width: 33px;
-  height: 33px;
+  width: 40px;
+  height: 40px;
   border-radius: 10%;
   background-color: #770000;
   z-index: 10;
   display: inline-block;
   position: relative;
   border: 1px solid black;
-  font-size: 8px;
+  font-size: 25px;
   padding: 0px;
   margin: 0px;
 }
 
 #gamearea {
   z-index: 10;
-  position: fixed;
   display: block;
-  margin: 0.3rem 15rem;
+  margin: 0.5rem auto;
+  width: 500px;
 }
 
 .inventory {
@@ -279,4 +279,41 @@ em {
 
 .cell:nth-child(5) {
   background-color: transparent;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.modal .modal-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  border: 2px solid #000000;
+  border-radius: 16px;
+  padding: 16px;
+  background-color: #fff;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.modal .modal-box .modal-header {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.modal .modal-box .modal-content {
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal .modal-box .modal-footer .confirm {
+  display: flex;
 }
